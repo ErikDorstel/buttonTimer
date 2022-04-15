@@ -43,6 +43,7 @@ class buttonTimer {
     uint8_t currState=!active;
     uint32_t lastTime=0;
     uint32_t duration=0;
+
     buttonTimer(uint8_t value1,void (*value2)(uint8_t,uint32_t)) {
       gpio=value1; call=value2; setPinMode(); }
     buttonTimer(uint8_t value1,void (*value2)(uint8_t,uint32_t),uint8_t value3) {
@@ -53,6 +54,7 @@ class buttonTimer {
       gpio=value1; call=value2; active=value3; bounce=value4; max=value5; setPinMode(); }
     buttonTimer(uint8_t value1,void (*value2)(uint8_t,uint32_t),uint8_t value3,uint16_t value4,uint32_t value5,uint8_t value6) {
       gpio=value1; call=value2; active=value3; bounce=value4; max=value5; pull=value6; setPinMode(); }
+
     void set(uint8_t value1,void (*value2)(uint8_t,uint32_t)) {
       gpio=value1; call=value2; setPinMode(); }
     void set(uint8_t value1,void (*value2)(uint8_t,uint32_t),uint8_t value3) {
@@ -63,13 +65,17 @@ class buttonTimer {
       gpio=value1; call=value2; active=value3; bounce=value4; max=value5; setPinMode(); }
     void set(uint8_t value1,void (*value2)(uint8_t,uint32_t),uint8_t value3,uint16_t value4,uint32_t value5,uint8_t value6) {
       gpio=value1; call=value2; active=value3; bounce=value4; max=value5; pull=value6; setPinMode(); }
-    void setPinMode() { if (pull==false) { pinMode(gpio,INPUT); }
+
+    void setPinMode() {
+      if (pull==false) { pinMode(gpio,INPUT); }
       else { if (active==LOW) { pinMode(gpio,INPUT_PULLUP); } else { pinMode(gpio,INPUT_PULLDOWN); } } }
+
+    void doCallback() { if (call!=NULL) { call(gpio,duration); } }
+
     void worker() {
-      currState=digitalRead(gpio);
-      duration=millis()-lastTime;
-      if (lastState==active && currState==!active && duration>bounce) { lastTime=millis(); lastState=!active; if (call!=NULL) { call(gpio,duration); } }
-      if (lastState==!active && currState==active && duration>bounce) { lastTime=millis(); lastState=active; duration=0; if (call!=NULL) { call(gpio,duration); } }
-      if (currState==active && duration>=max && max) { lastTime=millis(); lastState=active; if (call!=NULL) { call(gpio,duration); } } } };
+      currState=digitalRead(gpio); duration=millis()-lastTime;
+      if (lastState==active && currState==!active && duration>bounce) { lastTime=millis(); lastState=!active; doCallback(); }
+      if (lastState==!active && currState==active && duration>bounce) { lastTime=millis(); lastState=active; duration=0; doCallback(); }
+      if (currState==active && max && duration>=max) { lastTime=millis(); lastState=active; doCallback(); } } };
 
 #endif
