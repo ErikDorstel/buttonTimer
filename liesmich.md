@@ -15,16 +15,8 @@ Zur Parametrisierung werden sechs Attribute verwendet:
 
 Folgende Methoden werden unterstützt:
 
-* constructor(gpio,call) - Setzt gpio und call.
-* constructor(gpio,call,active) - Setzt gpio, call und active.
-* constructor(gpio,call,active,bounce) - Setzt gpio, call, active und bounce.
-* constructor(gpio,call,active,bounce,max) - Setzt gpio, call, active, bounce und max.
-* constructor(gpio,call,active,bounce,max,pull) - Setzt gpio, call, active, bounce, max und pull.
-* set(gpio,call) - Setzt gpio und call.
-* set(gpio,call,active) - Setzt gpio, call und active.
-* set(gpio,call,active,bounce) - Setzt gpio, call, active und bounce.
-* set(gpio,call,active,bounce,max) - Setzt gpio, call, active, bounce und max.
-* set(gpio,call,active,bounce,max,pull) - Setzt gpio, call, active, bounce, max und pull.
+* constructor(gpio,call,active,bounce,max,pull)
+* set(gpio,call,active,bounce,max,pull)
 * worker() - Diese Methode muss zyklisch im Main Loop aufgerufen werden.
 
 ### Einfaches Beispiel

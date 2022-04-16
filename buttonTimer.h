@@ -16,16 +16,8 @@
 //
 // The following methods are supported:
 //
-// * constructor(gpio,call) - Set gpio and call.
-// * constructor(gpio,call,active) - Set gpio, call and active.
-// * constructor(gpio,call,active,bounce) - Set gpio, call, active and bounce.
-// * constructor(gpio,call,active,bounce,max) - Set gpio, call, active, bounce and max.
-// * constructor(gpio,call,active,bounce,max,pull) - Set gpio, call, active, bounce, max and pull.
-// * set(gpio,call) - Set gpio and call.
-// * set(gpio,call,active) - Set gpio, call and active.
-// * set(gpio,call,active,bounce) - Set gpio, call, active and bounce.
-// * set(gpio,call,active,bounce,max) - Set gpio, call, active, bounce and max.
-// * set(gpio,call,active,bounce,max,pull) - Set gpio, call, active, bounce, max and pull.
+// * constructor(gpio,call,active,bounce,max,pull)
+// * set(gpio,call,active,bounce,max,pull)
 // * worker() - This method must be called cyclically in the main loop.
 
 #ifndef BUTTON_TIMER_H
@@ -34,7 +26,7 @@
 class buttonTimer {
   public:
     uint8_t gpio;
-    void (*call)(uint8_t,uint32_t)=NULL;
+    void (*call)(uint8_t,uint32_t)=nullptr;
     uint8_t active=LOW;
     uint16_t bounce=50;
     uint32_t max=false;
@@ -44,33 +36,17 @@ class buttonTimer {
     uint32_t lastTime=0;
     uint32_t duration=0;
 
-    buttonTimer(uint8_t value1,void (*value2)(uint8_t,uint32_t)) {
-      gpio=value1; call=value2; setPinMode(); }
-    buttonTimer(uint8_t value1,void (*value2)(uint8_t,uint32_t),uint8_t value3) {
-      gpio=value1; call=value2; active=value3; setPinMode(); }
-    buttonTimer(uint8_t value1,void (*value2)(uint8_t,uint32_t),uint8_t value3,uint16_t value4) {
-      gpio=value1; call=value2; active=value3; bounce=value4; setPinMode(); }
-    buttonTimer(uint8_t value1,void (*value2)(uint8_t,uint32_t),uint8_t value3,uint16_t value4,uint32_t value5) {
-      gpio=value1; call=value2; active=value3; bounce=value4; max=value5; setPinMode(); }
-    buttonTimer(uint8_t value1,void (*value2)(uint8_t,uint32_t),uint8_t value3,uint16_t value4,uint32_t value5,uint8_t value6) {
+    buttonTimer(uint8_t value1,void (*value2)(uint8_t,uint32_t),uint8_t value3=LOW,uint16_t value4=50,uint32_t value5=false,uint8_t value6=true) {
       gpio=value1; call=value2; active=value3; bounce=value4; max=value5; pull=value6; setPinMode(); }
 
-    void set(uint8_t value1,void (*value2)(uint8_t,uint32_t)) {
-      gpio=value1; call=value2; setPinMode(); }
-    void set(uint8_t value1,void (*value2)(uint8_t,uint32_t),uint8_t value3) {
-      gpio=value1; call=value2; active=value3; setPinMode(); }
-    void set(uint8_t value1,void (*value2)(uint8_t,uint32_t),uint8_t value3,uint16_t value4) {
-      gpio=value1; call=value2; active=value3; bounce=value4; setPinMode(); }
-    void set(uint8_t value1,void (*value2)(uint8_t,uint32_t),uint8_t value3,uint16_t value4,uint32_t value5) {
-      gpio=value1; call=value2; active=value3; bounce=value4; max=value5; setPinMode(); }
-    void set(uint8_t value1,void (*value2)(uint8_t,uint32_t),uint8_t value3,uint16_t value4,uint32_t value5,uint8_t value6) {
+    void set(uint8_t value1,void (*value2)(uint8_t,uint32_t),uint8_t value3=LOW,uint16_t value4=50,uint32_t value5=false,uint8_t value6=true) {
       gpio=value1; call=value2; active=value3; bounce=value4; max=value5; pull=value6; setPinMode(); }
 
     void setPinMode() {
       if (pull==false) { pinMode(gpio,INPUT); }
       else { if (active==LOW) { pinMode(gpio,INPUT_PULLUP); } else { pinMode(gpio,INPUT_PULLDOWN); } } }
 
-    void doCallback() { if (call!=NULL) { call(gpio,duration); } }
+    void doCallback() { if (call!=nullptr) { call(gpio,duration); } }
 
     void worker() {
       currState=digitalRead(gpio); duration=millis()-lastTime;

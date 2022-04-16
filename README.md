@@ -15,20 +15,12 @@ Six attributes are used for parameterization:
 
 The following methods are supported:
 
-* constructor(gpio,call) - Set gpio and call.
-* constructor(gpio,call,active) - Set gpio, call and active.
-* constructor(gpio,call,active,bounce) - Set gpio, call, active and bounce.
-* constructor(gpio,call,active,bounce,max) - Set gpio, call, active, bounce and max.
-* constructor(gpio,call,active,bounce,max,pull) - Set gpio, call, active, bounce, max and pull.
-* set(gpio,call) - Set gpio and call.
-* set(gpio,call,active) - Set gpio, call and active.
-* set(gpio,call,active,bounce) - Set gpio, call, active and bounce.
-* set(gpio,call,active,bounce,max) - Set gpio, call, active, bounce and max.
-* set(gpio,call,active,bounce,max,pull) - Set gpio, call, active, bounce, max and pull.
+* constructor(gpio,call,active,bounce,max,pull)
+* set(gpio,call,active,bounce,max,pull)
 * worker() - This method must be called cyclically in the main loop.
 
 ### Basic example
-Outputs the duration the button was closed on the serial interface.
+Outputs the duration the button was pressed on the serial interface.
 
     #include "buttonTimer.h"
     
