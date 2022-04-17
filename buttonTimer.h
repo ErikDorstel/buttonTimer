@@ -40,10 +40,10 @@ class buttonTimer {
     uint32_t lastTime=0;
     uint32_t duration=0;
 
-    buttonTimer(uint8_t value1,void (*value2)(uint8_t,uint32_t),uint8_t value3=activeLow,uint16_t value4=50,uint32_t value5=infinite,uint8_t value6=true) {
+    buttonTimer(uint8_t value1,void (*value2)(uint8_t,uint32_t),uint8_t value3=activeLow,uint32_t value4=50,uint32_t value5=infinite,bool value6=true) {
       gpio=value1; call=value2; active=value3; bounce=value4; max=value5; pull=value6; setPinMode(); }
 
-    void set(uint8_t value1,void (*value2)(uint8_t,uint32_t),uint8_t value3=activeLow,uint16_t value4=50,uint32_t value5=infinite,uint8_t value6=true) {
+    void set(uint8_t value1,void (*value2)(uint8_t,uint32_t),uint8_t value3=activeLow,uint32_t value4=50,uint32_t value5=infinite,bool value6=true) {
       gpio=value1; call=value2; active=value3; bounce=value4; max=value5; pull=value6; setPinMode(); }
 
     void setPinMode() {
