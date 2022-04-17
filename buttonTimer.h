@@ -9,10 +9,10 @@
 //
 // * uint8_t gpio - The number of the GPIO port. (no default value)
 // * void call - The name of a function to call when the button is released. (no default value)
-// * uint8_t active - The value LOW configure the GPIO port to active low. (default value LOW)
-// * uint16_t bounce - The time in ms at which level changes are suppressed to prevent bouncing. (default value 50)
-// * uint32_t max - The maximum time in ms to wait for button release. false for infinite. (default value false)
-// * uint8_t pull - If true the pull up/down resistors get activated. (default value true)
+// * uint8_t active - The value activeLow configure the GPIO port to active low. (default value activeLow)
+// * uint32_t bounce - The time in ms at which level changes are suppressed to prevent bouncing. (default value 50)
+// * uint32_t max - The maximum time in ms to wait for button release. Set value infinite for infinite. (default value infinite)
+// * bool pull - If true the pull up/down resistors get activated. (default value true)
 //
 // The following methods are supported:
 //
@@ -23,28 +23,32 @@
 #ifndef BUTTON_TIMER_H
 #define BUTTON_TIMER_H
 
+#define infinite 0
+#define activeLow 0
+#define activeHigh 1
+
 class buttonTimer {
   public:
     uint8_t gpio;
     void (*call)(uint8_t,uint32_t)=nullptr;
-    uint8_t active=LOW;
-    uint16_t bounce=50;
-    uint32_t max=false;
-    uint8_t pull=true;
+    uint8_t active=activeLow;
+    uint32_t bounce=50;
+    uint32_t max=infinite;
+    bool pull=true;
     uint8_t lastState=!active;
     uint8_t currState=!active;
     uint32_t lastTime=0;
     uint32_t duration=0;
 
-    buttonTimer(uint8_t value1,void (*value2)(uint8_t,uint32_t),uint8_t value3=LOW,uint16_t value4=50,uint32_t value5=false,uint8_t value6=true) {
+    buttonTimer(uint8_t value1,void (*value2)(uint8_t,uint32_t),uint8_t value3=activeLow,uint16_t value4=50,uint32_t value5=infinite,uint8_t value6=true) {
       gpio=value1; call=value2; active=value3; bounce=value4; max=value5; pull=value6; setPinMode(); }
 
-    void set(uint8_t value1,void (*value2)(uint8_t,uint32_t),uint8_t value3=LOW,uint16_t value4=50,uint32_t value5=false,uint8_t value6=true) {
+    void set(uint8_t value1,void (*value2)(uint8_t,uint32_t),uint8_t value3=activeLow,uint16_t value4=50,uint32_t value5=infinite,uint8_t value6=true) {
       gpio=value1; call=value2; active=value3; bounce=value4; max=value5; pull=value6; setPinMode(); }
 
     void setPinMode() {
       if (pull==false) { pinMode(gpio,INPUT); }
-      else { if (active==LOW) { pinMode(gpio,INPUT_PULLUP); } else { pinMode(gpio,INPUT_PULLDOWN); } } }
+      else { if (active==activeLow) { pinMode(gpio,INPUT_PULLUP); } else { pinMode(gpio,INPUT_PULLDOWN); } } }
 
     void doCallback() { if (call!=nullptr) { call(gpio,duration); } }
 

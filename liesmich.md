@@ -8,10 +8,10 @@ Zur Parametrisierung werden sechs Attribute verwendet:
 
 * uint8_t gpio - Die Nummer des GPIO Pin. (kein Standardwert)
 * void call - Der Name der Funktion welche nach einem Tastendruck aufgerufen wird. (kein Standardwert)
-* uint8_t active - Wenn der Pegel des GPIO Pin bei gedrückter Taste „LOW“ ist, ist hier LOW zu übergeben. (Standardwert LOW)
-* uint16_t bounce - Zeit in ms in welcher als Prellschutz keine Auswertung erfolgt. (Standardwert 50)
-* uint32_t max - Zeit nach welcher das Warten auf einen Tastendruck abgebrochen wird. false für unendlich. (Standardwert false)
-* uint8_t pull - Legt fest ob die Pull Up/Down Widerstände aktiviert werden. True aktiviert sie. (Standardwert true)
+* uint8_t active - Wenn der Pegel des GPIO Pin bei gedrückter Taste „LOW“ ist, ist hier activeLow zu übergeben. (Standardwert activeLow)
+* uint32_t bounce - Zeit in ms in welcher als Prellschutz keine Auswertung erfolgt. (Standardwert 50)
+* uint32_t max - Zeit nach welcher das Warten auf einen Tastendruck abgebrochen wird. Der Wert infinite steht für unendlich. (Standardwert infinite)
+* bool pull - Legt fest ob die Pull Up/Down Widerstände aktiviert werden. True aktiviert sie. (Standardwert true)
 
 Folgende Methoden werden unterstützt:
 
@@ -26,7 +26,7 @@ Gibt die Dauer eines Tastendrucks auf der seriellen Schnittstelle aus.
     
     void doExampleOne(uint8_t gpio,uint32_t duration) { Serial.println(duration); }
     
-    buttonTimer exampleOne(19,doExampleOne,LOW,50,5000,true);
+    buttonTimer exampleOne(19,doExampleOne,activeLow,50,5000,true);
     
     void setup() { Serial.begin(115200); }
     
