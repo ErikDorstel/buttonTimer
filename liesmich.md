@@ -8,15 +8,16 @@ Zur Parametrisierung werden sechs Attribute verwendet:
 
 * uint8_t gpio - Die Nummer des GPIO Pin. (kein Standardwert)
 * void call - Der Name der Funktion welche nach einem Tastendruck aufgerufen wird. (kein Standardwert)
+* uint8_t normally - Wählt NO oder NC Taste. (normOpen oder normClosed, Standardwert normOpen)
 * uint8_t active - Wenn der Pegel des GPIO Pin bei gedrückter Taste „LOW“ ist, ist hier activeLow zu übergeben. (Standardwert activeLow)
 * uint32_t bounce - Zeit in ms in welcher als Prellschutz keine Auswertung erfolgt. (Standardwert 50)
-* uint32_t max - Zeit nach welcher das Warten auf einen Tastendruck abgebrochen wird. Der Wert infinite steht für unendlich. (Standardwert infinite)
+* uint32_t max - Zeit nach welcher das Warten auf einen Tastendruck abgebrochen wird. Der Wert btInfinite steht für unendlich. (Standardwert btInfinite)
 * bool pull - Legt fest ob die Pull Up/Down Widerstände aktiviert werden. True aktiviert sie. (Standardwert true)
 
 Folgende Methoden werden unterstützt:
 
-* constructor(gpio,call,active,bounce,max,pull)
-* set(gpio,call,active,bounce,max,pull)
+* constructor(gpio,call,normally,active,bounce,max,pull)
+* set(gpio,call,normally,active,bounce,max,pull)
 * worker() - Diese Methode muss zyklisch im Main Loop aufgerufen werden.
 
 ### Einfaches Beispiel

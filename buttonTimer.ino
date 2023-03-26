@@ -6,8 +6,8 @@ void buttonChanged(uint8_t gpio,uint32_t duration) {
   Serial.print(gpio); Serial.print(",");
   Serial.print(duration); Serial.print("\r\n"); }
 
-buttonTimer exampleOne(18,buttonChanged,activeLow,50,5000,true);
-buttonTimer exampleTwo(19,buttonChanged,activeLow,50,5000,true);
+buttonTimer exampleOne(18,buttonChanged,normOpen,activeLow,50,5000,true);
+buttonTimer exampleTwo(19,buttonChanged,normOpen,activeLow,50,5000,true);
 
 void setup() { Serial.begin(115200); }
 
