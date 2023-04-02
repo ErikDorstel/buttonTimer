@@ -27,7 +27,7 @@ Gibt die Dauer eines Tastendrucks auf der seriellen Schnittstelle aus.
     
     void doExampleOne(uint8_t gpio,uint32_t duration) { Serial.println(duration); }
     
-    buttonTimer exampleOne(19,doExampleOne,activeLow,50,5000,true);
+    buttonTimer exampleOne(19,doExampleOne,normOpen,activeLow,50,5000,true);
     
     void setup() { Serial.begin(115200); }
     
